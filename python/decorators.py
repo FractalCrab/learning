@@ -1,6 +1,17 @@
-from math import sqrt 
+import math
+import time
 
-@time
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(end - start)
+        return result
+    return wrapper
+
+@timer
 def is_prime(n):
     """
     Deterministic test based on the given pseudocode:
@@ -42,16 +53,9 @@ def is_prime(n):
 
     return True
 
-def time(func):
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        result = func(*args, **kwargs)
-        end = time.time()
-        print(end - start)
-        return result
-    return wrapper
+
 
 if __name__ == '__main__':
     n = int(input("Enter a number: "))
-    print(is_prime(n))
+    is_prime(n)
     

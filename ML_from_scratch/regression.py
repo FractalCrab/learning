@@ -1,12 +1,15 @@
+import numpy as np
+import plotly.express as px
 class LinearRegression:
-    def __init__(self, learning_rate=0.01, n_iters=1000):
+    def __init__(self, learning_rate=0.01, n_iters=1000, reg_lambda=0.0):
         self.lr = learning_rate
         self.n_iters = n_iters
         self.weights = None
         self.bias = None
+        self.regularization = False
+        self.reg_lambda = reg_lambda 
 
     def set_initial_params(self, n_features):
-
         self.weights = np.random.rand(n_features) * 0.01
         self.bias = 0
 
@@ -14,12 +17,19 @@ class LinearRegression:
         return np.dot(X, self.weights) + self.bias
 
     def loss(self, y_pred, y_true):
-        return np.mean((y_pred - y_true) ** 2)
+        n = len(y_true)
+        mse = np.mean((y_pred - y_true) ** 2)
+        if not self.regularization:
+            return mse
+        reg_term = (self.reg_lambda / (2 * n)) * np.sum(self.weights ** 2)
+        return mse + reg_term
 
     def backward(self, y_pred):
         n = len(y_pred)
         dw = (1 / n) * np.dot(self._X.T, (y_pred - self._y))
         db = (1 / n) * np.sum(y_pred - self._y)
+        if self.regularization:
+            dw += (self.reg_lambda / n) * self.weights
         return dw, db
 
     def fit(self, X, y, plot_loss=True):
