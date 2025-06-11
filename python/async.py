@@ -1,12 +1,12 @@
 import asyncio
 
 async def say_hello_async():
-    await asyncio.sleep(2)  # Simulates waiting for 2 seconds
+    await asyncio.sleep(2)  
     print("Hello, Async World!")
 
 async def do_something_else():
     print("Starting another task...")
-    await asyncio.sleep(2)  # Simulates doing something else for 1 second
+    await asyncio.sleep(2)  
     print("Finished another task!")
 
 async def main():
