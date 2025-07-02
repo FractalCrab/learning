@@ -24,7 +24,7 @@ class Variable:
         
         return out
     
-    def __radd__(self, other):  # For other + self
+    def __radd__(self, other): 
         return self + other
     
     def __mul__(self, other):
